@@ -1,0 +1,12 @@
+{
+    "appService.zipIgnorePattern": [
+        ".env.*",
+        "package-lock.json",
+        "node_modules{,/**}",
+        ".next{,/**}/",
+        ".git{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/ac473cc4-c20c-46e7-bc5c-bca27bcd2472/resourceGroups/ak-travel-group/providers/Microsoft.Web/sites/auth-email-mng",
+    "appService.deploySubpath": "."
+}

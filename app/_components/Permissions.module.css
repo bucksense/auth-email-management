@@ -1,0 +1,282 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* header + row share the same grid */
+.tableHeader,
+.row {
+  display: grid;
+  grid-template-columns: 1fr repeat(5, 110px) 36px;
+  align-items: center;
+  gap: 0 8px;
+  padding: 10px 12px;
+}
+
+.tableHeader {
+  border-bottom: 2px solid var(--button-secondary-border, #ebebeb);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary, #666);
+}
+
+.tableHeader span,
+.tableHeader span:not(:first-child) {
+  text-align: center;
+}
+
+.tableHeader span:first-child {
+  text-align: left;
+}
+
+.row {
+  border-bottom: 1px solid var(--button-secondary-border, #ebebeb);
+  transition: background 0.15s;
+}
+
+.row:last-of-type {
+  border-bottom: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .row:hover {
+    background: var(--button-secondary-hover, #f2f2f2);
+    border-radius: 6px;
+  }
+}
+
+.emailInput {
+  width: 100%;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-primary, #000);
+  background: var(--button-secondary-hover, #f2f2f2);
+  border: 1px solid var(--button-secondary-border, #e0e0e0);
+  border-radius: 4px;
+  padding: 5px 8px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.emailInput::placeholder {
+  color: var(--text-secondary, #999);
+}
+
+.emailInput:focus {
+  border-color: #888;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.06);
+  background: var(--foreground, #fff);
+}
+
+@media (prefers-color-scheme: dark) {
+  .emailInput {
+    background: #1a1a1a;
+    border-color: #333;
+  }
+
+  .emailInput:focus {
+    border-color: #666;
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.06);
+    background: #222;
+  }
+}
+
+.checkCell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkCell input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--text-primary, #000);
+  cursor: pointer;
+}
+
+.removeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary, #999);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  justify-self: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .removeButton:hover {
+    background: #fef2f2;
+    color: #dc2626;
+  }
+}
+
+.errorBox,
+.okBox {
+  margin: 16px 0 0;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.errorBox {
+  border: 1px solid #fca5a5;
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.okBox {
+  border: 1px solid #86efac;
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .errorBox {
+    background: #450a0a;
+    border-color: #7f1d1d;
+    color: #f87171;
+  }
+
+  .okBox {
+    background: #052e16;
+    border-color: #166534;
+    color: #4ade80;
+  }
+}
+
+.empty {
+  padding: 24px 12px;
+  font-size: 13px;
+  color: var(--text-secondary, #999);
+  text-align: center;
+  border-bottom: 1px solid var(--button-secondary-border, #ebebeb);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 0;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 128px;
+  border: 1px solid var(--button-secondary-border, #ebebeb);
+  background: transparent;
+  color: var(--text-primary, #000);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .addButton:hover {
+    background: var(--button-secondary-hover, #f2f2f2);
+    border-color: transparent;
+  }
+}
+
+.saveButton {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 20px;
+  border-radius: 128px;
+  border: none;
+  background: var(--text-primary, #000);
+  color: var(--background, #fff);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .saveButton:hover {
+    background: var(--button-primary-hover, #383838);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .removeButton:hover {
+    background: #450a0a;
+    color: #f87171;
+  }
+}
+
+.reloadButton {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 128px;
+  border: 1px solid var(--button-secondary-border, #ebebeb);
+  background: transparent;
+  color: var(--text-secondary, #666);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reloadButton:hover {
+    background: var(--button-secondary-hover, #f2f2f2);
+    border-color: transparent;
+    color: var(--text-primary, #000);
+  }
+}
+
+/* disabled state */
+.addButton:disabled,
+.reloadButton:disabled,
+.saveButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: 6px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+
+.footerRightBtns {
+    display: flex;
+    gap: 8px;
+}

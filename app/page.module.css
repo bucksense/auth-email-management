@@ -1,0 +1,221 @@
+.page {
+  --background: #fafafa;
+  --foreground: #fff;
+
+  --text-primary: #000;
+  --text-secondary: #666;
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+  --button-secondary-border: #ebebeb;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-geist-sans);
+  background-color: var(--background);
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1400px;
+  flex-direction: column;
+  align-items: flex-start;
+  /* justify-content: space-between; */
+  background-color: var(--foreground);
+  padding: 80px;
+  gap: 20px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 24px;
+}
+
+.intro h1 {
+  max-width: 320px;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: -2.4px;
+  text-wrap: balance;
+  color: var(--text-primary);
+}
+
+.intro p {
+  max-width: 440px;
+  font-size: 18px;
+  line-height: 32px;
+  text-wrap: balance;
+  color: var(--text-secondary);
+}
+
+.intro a {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.ctas {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* max-width: 440px; */
+  gap: 16px;
+  font-size: 14px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+
+@media (max-width: 600px) {
+  .main {
+    padding: 48px 24px;
+  }
+
+  .intro {
+    gap: 16px;
+  }
+
+  .intro h1 {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -1.92px;
+  }
+}
+
+.accountCard {
+  width: 100%;
+  border: 1px solid var(--button-secondary-border);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+/* 
+.badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 128px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.8;
+}
+
+.badgeGreen {
+  color: #16a34a;
+  background: #f0fdf4;
+}
+
+.badgeRed {
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+.badgeGray {
+  color: var(--text-secondary);
+  background: var(--button-secondary-hover, #f2f2f2);
+}
+
+.dateGrid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 24px;
+  font-size: 13px;
+} */
+
+.refreshButton {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 20px;
+  border-radius: 128px;
+  border: 1px solid transparent;
+  background: var(--text-primary);
+  color: var(--background);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .refreshButton:hover {
+    background: var(--button-primary-hover);
+  }
+}
+
+
+.accountCard h4 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+}
+
+/* .dateLabel {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.dateValue {
+  color: var(--text-primary);
+} */
+
+/* @media (prefers-color-scheme: dark) {
+  .badgeGreen {
+    color: #4ade80;
+    background: #052e16;
+  }
+
+  .badgeRed {
+    color: #f87171;
+    background: #450a0a;
+  }
+} */
+
+@media (prefers-color-scheme: dark) {
+  .logo {
+    filter: invert();
+  }
+
+  .page {
+    --background: #000;
+    --foreground: #000;
+
+    --text-primary: #ededed;
+    --text-secondary: #999;
+
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #1a1a1a;
+    --button-secondary-border: #1a1a1a;
+  }
+}

@@ -1,0 +1,235 @@
+
+.statusActive,
+.statusDisabled {
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.statusActive::before,
+.statusDisabled::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statusActive {
+  color: #16a34a;
+}
+
+.statusActive::before {
+  background: #16a34a;
+  box-shadow: 0 0 0 3px #dcfce7;
+}
+
+.statusDisabled {
+  color: #dc2626;
+}
+
+.statusDisabled::before {
+  background: #dc2626;
+  box-shadow: 0 0 0 3px #fee2e2;
+}
+
+.inlineTagGreen,
+.inlineTagRed {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 128px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.inlineTagGreen {
+  color: #16a34a;
+  background: #f0fdf4;
+}
+
+.inlineTagRed {
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+.dateGrid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 24px;
+  font-size: 13px;
+}
+
+.dateLabel {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.dateValue {
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.revokeRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.refreshButton {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 128px;
+  border: 1px solid #86efac;
+  background: transparent;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .refreshButton:hover {
+    background: #f0fdf4;
+    border-color: #16a34a;
+  }
+}
+
+.refreshButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (prefers-color-scheme: dark) {
+  .refreshButton {
+    color: #4ade80;
+    border-color: #166534;
+  }
+
+  .refreshButton:hover {
+    background: #052e16;
+    border-color: #4ade80;
+  }
+}
+
+.revokeButton {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 128px;
+  border: 1px solid #fca5a5;
+  background: transparent;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .revokeButton:hover {
+    background: #fef2f2;
+    border-color: #dc2626;
+  }
+}
+
+.revokeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.errorBox {
+  margin: 8px 0 0;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  border: 1px solid #fca5a5;
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .statusActive {
+    color: #4ade80;
+  }
+
+  .statusActive::before {
+    background: #4ade80;
+    box-shadow: 0 0 0 3px #052e16;
+  }
+
+  .statusDisabled {
+    color: #f87171;
+  }
+
+  .statusDisabled::before {
+    background: #f87171;
+    box-shadow: 0 0 0 3px #450a0a;
+  }
+
+  .inlineTagGreen {
+    color: #4ade80;
+    background: #052e16;
+  }
+
+  .inlineTagRed {
+    color: #f87171;
+    background: #450a0a;
+  }
+
+  .errorBox {
+    background: #450a0a;
+    border-color: #7f1d1d;
+    color: #f87171;
+  }
+
+  .revokeButton {
+    color: #f87171;
+    border-color: #7f1d1d;
+  }
+
+  .revokeButton:hover {
+    background: #450a0a;
+    border-color: #f87171;
+  }
+
+  .refreshButton {
+    color: #4ade80;
+    border-color: #166534;
+  }
+
+  .refreshButton:hover {
+    background: #052e16;
+    border-color: #4ade80;
+  }
+}
