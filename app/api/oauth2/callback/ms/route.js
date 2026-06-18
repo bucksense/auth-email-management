@@ -15,7 +15,8 @@ export async function GET(request) {
   const error = searchParams.get('error')
   const descr = searchParams.get('error_description')
 
-  const signinUrl = (msg, descr) => new URL(`/auth/signin?error=${encodeURIComponent(msg)}&descr=${encodeURIComponent(descr)}`, request.url)
+  const base = process.env.NEXTAUTH_URL
+  const signinUrl = (msg, descr) => new URL(`/auth/signin?error=${encodeURIComponent(msg)}&descr=${encodeURIComponent(descr)}`, base)
 
   if (error) {
     return NextResponse.redirect(signinUrl(error, descr))
@@ -82,7 +83,7 @@ export async function GET(request) {
     ? '__Secure-next-auth.session-token'
     : 'next-auth.session-token'
 
-  const response = NextResponse.redirect(new URL(callbackUrl, request.url))
+  const response = NextResponse.redirect(new URL(callbackUrl, base))
 
   response.cookies.set(cookieName, sessionToken, {
     httpOnly: true,
