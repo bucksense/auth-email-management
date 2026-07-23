@@ -4,6 +4,7 @@ import Services from "../models/services";
 import Users from "../models/users"
 import dbConnect from "./mongoose-client"
 import { apiFetch } from "./api-fetch";
+import { headers } from "next/headers";
 
 const SERVICE_KEY = process.env.OFFERMETRIX_SERVICE_KEY
 
@@ -271,11 +272,51 @@ export async function checkUserEmail({oauthData}, permissions) {
                 "Authorization": `Bearer ${oauthData.access_token}`
             }
         })
+        .then( () => {
+            return subscribeEmail({email: permission.email, oauthData})
+        })
         .catch(err => {
             throw {
                 message: err?.data?.error?.message || `Error adding email "${permission.email}": ${err.message}`
             }
         })
     }
+
+}
+
+export async function subscribeEmail({ email, oauthData }) {
+
+
+    const url = `https://graph.microsoft.com/v1.0/subscriptions`
+
+    const d = "https://3343750d7577917e-82-145-124-235.serveousercontent.com"
+
+    const body = {
+        "changeType": "created,updated",
+        "notificationUrl": `${d}/api/webhook/notifications`,
+        "lifecycleNotificationUrl": `${d}/api/webhook/lifecycle`,
+        // "notificationUrl": `${process.env.NEXTAUTH_URL}/api/webhook/notifications`,
+        // "lifecycleNotificationUrl": `${process.env.NEXTAUTH_URL}/api/webhook/lifecycle`,
+        "resource": `/users/${email}/messages`,
+        "expirationDateTime": dayjs().add(3, '').toISOString(),
+        "clientState": process.env.CLIENT_STATE
+    }
+
+    await apiFetch(url,{
+        method: 'POST',
+        headers:{
+            "Authorization": `Bearer ${oauthData.access_token}`
+        },
+        body: JSON.stringify(body)
+    })
+    .then( res => {
+        console.log('res for ', email, res)
+    })
+    .catch( err => {
+        console.log('err for ', email, err)
+    })
+
+ 
+
 
 }
