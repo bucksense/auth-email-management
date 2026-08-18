@@ -7,6 +7,7 @@ import { apiFetch } from "../libs/api-fetch"
 export default function Permissions({}) {
 
     const [ permissions, setPermissions ] = useState([])
+    const [ company, setCompany ] = useState('')
     const [ isSaving, setIsSaving ] = useState(false)
     const [ isLoading, setIsLoading ] = useState(false)
     const [ status, setStatus ] = useState({})
@@ -15,7 +16,8 @@ export default function Permissions({}) {
         setIsLoading(true)
         apiFetch('/api/permissions')
             .then(res => {
-                setPermissions(res?.data || [])
+                setPermissions(res?.data?.permissions || [])
+                setCompany(res?.data?.company || '')
                 setStatus({})
             })
             .catch(err => setStatus({ status: 'err', message: err.message }))
@@ -24,12 +26,19 @@ export default function Permissions({}) {
 
     const _loadData = useEffectEvent(loadData)
 
+    const updateCompany = (value) => {
+        // setPermissions( prev => prev.map( p => ({ ...p, company: value }) ) )
+        setCompany(value)
+    }
+
     const addEmail = () => {
         setPermissions( prev => ([...prev, {
             email: "",
+            role: "",
             readEmail: false,
             writeEmail: false,
-            readCalendar: false
+            readCalendar: false,
+            writeCalendar: false,
         }]))
     }
 
@@ -38,6 +47,7 @@ export default function Permissions({}) {
     }
 
     const updatePermission = (field, key, value) => {
+        // console.log('updatePermission', field, key, value)
         setPermissions( prev => {
             const item = prev.find( p => p.email == key )
             if ( item ) item[field] = value
@@ -49,13 +59,23 @@ export default function Permissions({}) {
         event.preventDefault()        
         setStatus({})
 
+        if ( !company ) {
+            setStatus({ status: 'err', message: 'Company required!' })
+            return
+        }   
+
         if ( !permissions.every( p => p.email ) ){
             setStatus({ status: 'err', message: 'Email required!' })
             return
         }        
+        if ( !permissions.every( p => p.role ) ){
+            setStatus({ status: 'err', message: 'Role required!' })
+            return
+        }        
+     
 
         setIsSaving(true)
-        apiFetch('/api/permissions', { method: 'POST', body: JSON.stringify(permissions) })
+        apiFetch('/api/permissions', { method: 'POST', body: JSON.stringify({ company, permissions }) })
             .then(() => setStatus({ status: 'ok', message: 'Permissions saved' }))
             .catch(err => setStatus({ status: 'err', message: err.message }))
             .finally(() => setIsSaving(false))
@@ -70,8 +90,25 @@ export default function Permissions({}) {
     return (
         <form onSubmit={onSubmitForm} className={styles.container}>
 
-            <div className={styles.tableHeader}> 
+            <div className={styles.companyBar}>
+                <label className={styles.companyField}>
+                    <span>Company</span>
+                    <select
+                        className={styles.select}
+                        value={company}
+                        onChange={ (e) => updateCompany(e.target.value) }
+                    >
+                        <option value="" disabled>Select company</option>
+                        <option value="crystal">Crystal</option>
+                        <option value="toc">TOC</option>
+                        <option value="uk-toc">UK TOC</option>
+                    </select>
+                </label>
+            </div>
+
+            <div className={styles.tableHeader}>
                 <span>Account</span>
+                <span>Role</span>
                 <span>Read Emails</span>
                 <span>Write Emails</span>
                 <span>Read Calendar</span>
@@ -89,9 +126,23 @@ export default function Permissions({}) {
                         type="email"
                         className={styles.emailInput}
                         defaultValue={perm.email}
-                        placeholder="email@domain.com"
+                        placeholder="Write your email"
                         onChange={ (e) => updatePermission( 'email', perm.email, e.target.value ) }
                     />
+                    <label className={styles.selectCell}>
+                        <select
+                            className={styles.select}
+                            defaultValue={perm.role || ""}
+                            onChange={ (e) => updatePermission( 'role', perm.email, e.target.value ) }
+                        >
+                            <option value="" disabled>Select role</option>
+                            <option value="sales">Sales</option>
+                            <option value="revenue">Revenue Management</option>
+                            <option value="operations">Operations</option>
+                            <option value="relations">Guest Relations</option>
+                            <option value="trade">Trade Sales</option>
+                        </select>
+                    </label>
                     <label className={styles.checkCell}>
                         <input 
                             type="checkbox" 

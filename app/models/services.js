@@ -20,8 +20,10 @@ const AccountSchema = new Schema({
         refresh_token: String,
         id_token: String
     },
+    company: String,
     permissions: [{
         email: String,
+        role: String,
         readEmail: Boolean,
         writeEmail: Boolean,
         readCalendar: Boolean,

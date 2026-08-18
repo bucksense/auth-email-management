@@ -19,9 +19,9 @@ export async function POST(request) {
     if ( !session )
         return Response.json({ error: "Unauthorized" }, { status: 401 })
 
-    const permissions = await request.json()   
+    const { company, permissions } = await request.json()
 
-    return await updatePermissions({ user: session.user, permissions })
+    return await updatePermissions({ user: session.user, company, permissions })
         .then( () => Response.json({ status: 'ok' }) )
         .catch( err => Response.json({ status: 'err', message: err.message},{status: err.statusCode || 500 }) )
 

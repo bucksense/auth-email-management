@@ -221,14 +221,18 @@ export async function getUserData({user}) {
 
 }
 
-export async function updatePermissions({user, permissions}) {
+export async function updatePermissions({user, company, permissions}) {
+    
+    if (!company) throw { message: "Company required" }
 
     const { service, account } = await getService(user)
 
     await checkUserEmail(account, permissions)
 
+    account.company = company
     account.permissions = permissions.map( p => ({
         email: p.email,
+        role: p.role,
         readEmail: !!p.readEmail || false,
         writeEmail: !!p.writeEmail || false,
         readCalendar: !!p.readCalendar || false,
@@ -242,7 +246,10 @@ export async function updatePermissions({user, permissions}) {
 export async function getPermissions({user}) {
 
     const { account } = await getService(user)
-    return account?.permissions || []
+    return {
+        permissions: account?.permissions || [],
+        company: account?.company || ''
+    }
 
 }
 
@@ -272,10 +279,10 @@ export async function checkUserEmail({oauthData}, permissions) {
                 "Authorization": `Bearer ${oauthData.access_token}`
             }
         })
-        .then( () => {
-            return subscribeEmail({email: permission.email, oauthData})
-        })
-        .catch(err => {
+        // .then( () => {
+        //     return subscribeEmail({email: permission.email, oauthData})
+        // })
+        .catch(err => {            
             throw {
                 message: err?.data?.error?.message || `Error adding email "${permission.email}": ${err.message}`
             }
@@ -314,6 +321,7 @@ export async function subscribeEmail({ email, oauthData }) {
     })
     .catch( err => {
         console.log('err for ', email, err)
+        throw err
     })
 
  
