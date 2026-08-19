@@ -59,10 +59,10 @@ export default function Permissions({}) {
         event.preventDefault()        
         setStatus({})
 
-        if ( !company ) {
-            setStatus({ status: 'err', message: 'Company required!' })
-            return
-        }   
+        // if ( !company ) {
+        //     setStatus({ status: 'err', message: 'Company required!' })
+        //     return
+        // }   
 
         if ( !permissions.every( p => p.email ) ){
             setStatus({ status: 'err', message: 'Email required!' })
@@ -98,7 +98,7 @@ export default function Permissions({}) {
                         value={company}
                         onChange={ (e) => updateCompany(e.target.value) }
                     >
-                        <option value="" disabled>Select company</option>
+                        <option value="" ></option>
                         <option value="crystal">Crystal</option>
                         <option value="toc">TOC</option>
                         <option value="uk-toc">UK TOC</option>

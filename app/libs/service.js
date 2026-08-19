@@ -223,7 +223,7 @@ export async function getUserData({user}) {
 
 export async function updatePermissions({user, company, permissions}) {
     
-    if (!company) throw { message: "Company required" }
+    // if (!company) throw { message: "Company required" }
 
     const { service, account } = await getService(user)
 
