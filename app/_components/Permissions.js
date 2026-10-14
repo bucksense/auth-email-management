@@ -1,16 +1,45 @@
 'use client'
 
-import { useEffect, useState, useCallback, useEffectEvent } from "react"
+import { useEffect, useState, useEffectEvent } from "react"
 import styles from "./Permissions.module.css"
 import { apiFetch } from "../libs/api-fetch"
+
+const COMPANIES = {
+    'crystal': 'Crystal',
+    'toc': 'US Toc',
+    'uk-toc': 'UK Toc',
+    'dmc-africa': 'DMC Africa'
+}
+
+const COMPANY_MAPPINGS = {
+    'toc': [
+        { value: "sales", label: "Sales" },
+        { value: "operations", label: "Operations" }
+    ],
+    'uk-toc': [ 
+        { value: "sales", label: "Sales" },         
+        { value: "relations", label: "Guest Relations" },
+        { value: "operations", label: "Operations" }
+    ],
+    'crystal': [ 
+        { value: "revenue", label: "Revenue Management" },
+        { value: "trade", label: "Trade Sales"},
+        { value: "support", label: "Sales Support"},
+    ],
+    'dmc-africa': [
+        { value: "sales_dmc_toc", label: "Sales DMC to TOC" },
+        { value: "sales_dmc_retail", label: "Sales DMC to Retail" },
+    ]
+}
 
 export default function Permissions({}) {
 
     const [ permissions, setPermissions ] = useState([])
-    const [ company, setCompany ] = useState('')
+    const [ company, setCompany ] = useState()
     const [ isSaving, setIsSaving ] = useState(false)
     const [ isLoading, setIsLoading ] = useState(false)
     const [ status, setStatus ] = useState({})
+    // const [ roles, setRoles ] = useState([])
 
     const loadData = () => {
         setIsLoading(true)
@@ -29,6 +58,7 @@ export default function Permissions({}) {
     const updateCompany = (value) => {
         // setPermissions( prev => prev.map( p => ({ ...p, company: value }) ) )
         setCompany(value)
+        // setRoles( COMPANY_MAPPINGS[value] )
     }
 
     const addEmail = () => {
@@ -59,10 +89,10 @@ export default function Permissions({}) {
         event.preventDefault()        
         setStatus({})
 
-        // if ( !company ) {
-        //     setStatus({ status: 'err', message: 'Company required!' })
-        //     return
-        // }   
+        if ( !company ) {
+            setStatus({ status: 'err', message: 'Company required!' })
+            return
+        }   
 
         if ( !permissions.every( p => p.email ) ){
             setStatus({ status: 'err', message: 'Email required!' })
@@ -81,6 +111,8 @@ export default function Permissions({}) {
             .finally(() => setIsSaving(false))
     }
 
+
+
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         _loadData()
@@ -97,11 +129,9 @@ export default function Permissions({}) {
                         className={styles.select}
                         value={company}
                         onChange={ (e) => updateCompany(e.target.value) }
-                    >
-                        <option value="" ></option>
-                        <option value="crystal">Crystal</option>
-                        <option value="toc">TOC</option>
-                        <option value="uk-toc">UK TOC</option>
+                    >                        
+                        <option value="">-- Select Company --</option>
+                        {Object.entries(COMPANIES).map( ([k,v]) => (<option key={k} value={k}>{v}</option>) )}
                     </select>
                 </label>
             </div>
@@ -135,12 +165,18 @@ export default function Permissions({}) {
                             defaultValue={perm.role || ""}
                             onChange={ (e) => updatePermission( 'role', perm.email, e.target.value ) }
                         >
-                            <option value="" disabled>Select role</option>
+
+                            <option value="">-- Select role --</option> 
+                            { company &&
+                                COMPANY_MAPPINGS[company]?.map( r => <option key={r.value} value={r.value}>{r.label}</option> )                                 
+                            }
+
+                            {/* <option value="" disabled>Select role</option>
                             <option value="sales">Sales</option>
                             <option value="revenue">Revenue Management</option>
                             <option value="operations">Operations</option>
                             <option value="relations">Guest Relations</option>
-                            <option value="trade">Trade Sales</option>
+                            <option value="trade">Trade Sales</option> */}
                         </select>
                     </label>
                     <label className={styles.checkCell}>
