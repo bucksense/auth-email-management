@@ -8,7 +8,8 @@ const COMPANIES = {
     'crystal': 'Crystal',
     'toc': 'US Toc',
     'uk-toc': 'UK Toc',
-    'dmc-africa': 'DMC Africa'
+    'dmc-africa': 'DMC Africa',
+    'sanctuary': "A&K Sanctuary"
 }
 
 const COMPANY_MAPPINGS = {
@@ -25,6 +26,9 @@ const COMPANY_MAPPINGS = {
         { value: "revenue", label: "Revenue Management" },
         { value: "trade", label: "Trade Sales"},
         { value: "support", label: "Sales Support"},
+    ],
+    'sanctuary':[
+        { value: "sales", label: "Sales" }
     ],
     'dmc-africa': [
         { value: "sales_dmc_toc", label: "Sales DMC to TOC" },
